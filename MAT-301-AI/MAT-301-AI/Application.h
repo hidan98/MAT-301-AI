@@ -1,9 +1,10 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include "Input.h"
 class Application
 {
 public:
-	Application(sf::RenderWindow* hwnd);
+	Application(sf::RenderWindow* hwnd, Input* in);
 	~Application();
 
 	void handleInput();
@@ -17,8 +18,10 @@ private:
 	void beginRender();
 	void endRender();
 
-
+	Input* input;
 	sf::RenderWindow* window;
+
+	sf::RectangleShape* raceLine;
 
 
 };
