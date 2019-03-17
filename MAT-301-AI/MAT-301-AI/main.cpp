@@ -4,9 +4,12 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1600, 900), "MAT 301");
+	sf::Vector2i screen(1600, 900);
+	
+
+	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "MAT 301");
 	Input input;
-	Application app(&window, &input);
+	Application app(&window, &input, screen);
 	sf::Sprite;
 	sf::Clock clock;
 	float deltaTime;
