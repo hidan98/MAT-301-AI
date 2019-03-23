@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "Input.h"
 #include "Car.h"
+#include "fl/Headers.h"
 
 class Application
 {
@@ -29,6 +30,8 @@ private:
 
 	sf::Vector2i screen;
 
+	sf::RectangleShape arrayOfLines[6];
 
+	fl::Engine* engine;
 };
 

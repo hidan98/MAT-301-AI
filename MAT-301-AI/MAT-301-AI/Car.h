@@ -27,11 +27,13 @@ private:
 
 	sf::Vector2f displacement;
 
-	distance position;
+	distance state;
 
 	sf::RectangleShape* raceLine;
 
 	sf::Vector2i screen_;
+
+
 
 };
 

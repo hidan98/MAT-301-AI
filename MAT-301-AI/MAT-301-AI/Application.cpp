@@ -13,6 +13,18 @@ Application::Application(sf::RenderWindow* hwnd, Input* in, sf::Vector2i screen_
 
 	car = new Car;
 	car->init(raceLine, screen);	
+
+	engine = new fl::Engine;
+	engine->setName("Fuzzy car engine");
+
+
+	for (int i = 0; i < 6; i++)
+	{
+		float temp = (float)screen_.x *(1.f / 6.f);
+		arrayOfLines[i].setSize(sf::Vector2f(1, screen.y));
+		arrayOfLines[i].setPosition(sf::Vector2f(temp*(i + 1), 0));
+		arrayOfLines[i].setFillColor(sf::Color::Red);
+	}
 }
 
 
@@ -45,7 +57,10 @@ void Application::render()
 	beginRender();
 	window->draw(*raceLine);
 	window->draw(*car);
-
+	for (int i = 0; i < 6; i++)
+	{
+		window->draw(arrayOfLines[i]);
+	}
 
 	endRender();
 }

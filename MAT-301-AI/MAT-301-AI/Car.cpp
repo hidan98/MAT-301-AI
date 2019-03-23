@@ -48,24 +48,37 @@ void Car::update()
 
 void Car::findPositon()
 {
+	float temp = (float)screen_.x *(1.f / 6.f);
 
 	switch (state)
 	{
 	case middle:
-		if()
+		if (raceLine->getPosition().x < getPosition().x)
+		{
+			
+			if (displacement.x > temp)
+			{
+				std::cout << "the line is far left of the car" << std::endl;
+			}
+		}
+		else if (raceLine->getPosition().x > getPosition().x)
+		{
+			std::cout << "the line is right of the car" << std::endl;
+		}
+
 	default:
 		break;
 	}
-	float temp = (float)screen_.x *(1.f / 6.f);
+	
 
-	float temp1 = (-temp);
+	/*float temp1 = (-temp);
 	if (raceLine->getPosition().x < getPosition().x)
 	{
 		
 
 		if (displacement.x < temp)
 		{
-			std::cout << "the line is left of the car" << std::endl;
+			
 
 		}
 
@@ -77,5 +90,5 @@ void Car::findPositon()
 	else
 	{
 		std::cout << "the line is right of the car" << std::endl;
-	}
+	}*/
 }
