@@ -21,6 +21,8 @@ private:
 	void beginRender();
 	void endRender();
 
+	void setUpFUIS();
+
 	Input* input;
 	sf::RenderWindow* window;
 
@@ -33,5 +35,9 @@ private:
 	sf::RectangleShape arrayOfLines[6];
 
 	fl::Engine* engine;
+	fl::InputVariable* displacement;
+	fl::InputVariable* velocity;
+
+	fl::OutputVariable* output;
 };
 

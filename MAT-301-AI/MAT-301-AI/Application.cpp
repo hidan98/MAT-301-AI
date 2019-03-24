@@ -14,8 +14,7 @@ Application::Application(sf::RenderWindow* hwnd, Input* in, sf::Vector2i screen_
 	car = new Car;
 	car->init(raceLine, screen);	
 
-	engine = new fl::Engine;
-	engine->setName("Fuzzy car engine");
+	
 
 
 	for (int i = 0; i < 6; i++)
@@ -32,6 +31,46 @@ Application::~Application()
 {
 }
 
+void Application::setUpFUIS()
+{
+	engine = new fl::Engine;
+	engine->setName("Fuzzy car engine");
+
+	displacement = new fl::InputVariable;
+	displacement->setName("displacement");
+	displacement->setRange(-800, 800);
+	displacement->setEnabled(true);
+	displacement->addTerm(new fl::Gaussian("left", 169.9, -400));
+	displacement->addTerm(new fl::Gaussian("center", 169.9, 0));
+	displacement->addTerm(new fl::Gaussian("right", 169.9, 400));
+	displacement->setLockValueInRange(true);
+	engine->addInputVariable(displacement);
+
+
+	velocity = new fl::InputVariable;
+	velocity->setName("velocity");
+	velocity->setRange(-800, 800);
+	velocity->setEnabled(true);
+	velocity->addTerm(new fl::Gaussian("left", 0.4246, -1));
+	velocity->addTerm(new fl::Gaussian("straight", 0.4246, 0.5));
+	velocity->addTerm(new fl::Gaussian("right", 0.4246, 1));
+	velocity->setLockValueInRange(true);
+	engine->addInputVariable(velocity);
+
+	output = new fl::OutputVariable;
+	output->setName("output");
+	output->setEnabled(true);
+	output->setLockValueInRange(false);
+	output->setAggregation(new fl::Maximum);
+	output->setDefuzzifier(new fl::Centroid(100));
+	output->setDefaultValue(fl::nan);
+	output->setLockPreviousValue(false);
+	//output->addTerm(new fl::)
+
+
+
+
+}
 
 void Application::handleInput()
 {
