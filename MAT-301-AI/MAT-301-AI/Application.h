@@ -39,5 +39,7 @@ private:
 	fl::InputVariable* velocity;
 
 	fl::OutputVariable* output;
+
+	fl::RuleBlock* rules;
 };
 

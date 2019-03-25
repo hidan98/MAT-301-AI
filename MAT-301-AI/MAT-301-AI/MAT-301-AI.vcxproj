@@ -76,11 +76,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)/../SFML-2.5.1/include;$(SolutionDir)/../fuzzylite-6.0/fuzzylite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../SFML-2.5.1/include;$(SolutionDir)/../fuzzylite-6.0/fuzzylite;$(SolutionDir)/../imgui-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)/../SFML-2.5.1/lib;$(SolutionDir)/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-main-d.lib;sfml-network-d.lib;fuzzylite-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-main-d.lib;sfml-network-d.lib;fuzzylite-debug.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -128,6 +129,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\imgui-master\imgui-SFML.cpp" />
+    <ClCompile Include="..\..\imgui-master\imgui.cpp" />
+    <ClCompile Include="..\..\imgui-master\imgui_draw.cpp" />
+    <ClCompile Include="..\..\imgui-master\imgui_widgets.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Input.cpp" />

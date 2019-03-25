@@ -1,6 +1,8 @@
 #include <sfml/Graphics.hpp>
 #include "Input.h"
 #include "Application.h"
+#include "imgui.h"
+#include "imgui-SFML.h"
 
 int main()
 {
@@ -8,6 +10,7 @@ int main()
 	
 
 	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "MAT 301");
+	ImGui::SFML::Init(window);
 	Input input;
 	Application app(&window, &input, screen);
 	sf::Sprite;
@@ -19,6 +22,7 @@ int main()
 
 		while (window.pollEvent(event))
 		{
+			ImGui::SFML::ProcessEvent(event);
 			switch (event.type)
 			{
 			case sf::Event::Closed:
@@ -44,5 +48,6 @@ int main()
 	
 
 	}
+	ImGui::SFML::Shutdown();
 	return 0;
 }

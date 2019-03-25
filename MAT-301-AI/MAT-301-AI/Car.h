@@ -21,6 +21,10 @@ public:
 
 	void findPositon();
 
+	sf::Vector2f getDisplacment();
+	sf::Vector2f getVelocity() { return velocity; }
+	void setVelocity(sf::Vector2f vel) { velocity = vel; }
+
 private:
 
 	sf::Vector2f velocity;

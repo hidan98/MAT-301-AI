@@ -25,9 +25,10 @@ void Car::init(sf::RectangleShape* shape, sf::Vector2i screen)
 	std::cout << getOrigin().x << std::endl;
 	std::cout << getOrigin().y << std::endl;
 
-	setPosition(screen.x / 2, screen.y );
+	setPosition(screen.x / 2, screen.y - 100);
 	
 	displacement = sf::Vector2f(0, 0);
+	velocity = sf::Vector2f(0, 0);
 	screen_ = screen;
 
 	state = middle;
@@ -41,9 +42,17 @@ void Car::cleanUp()
 void Car::update()
 {
 	displacement.x = getPosition().x - raceLine->getPosition().x;
-	std::cout << displacement.x << std::endl;
+	//std::cout << displacement.x << std::endl;
+	
+
 	findPositon();
 	
+}
+
+sf::Vector2f Car::getDisplacment()
+{
+	displacement.x = getPosition().x - raceLine->getPosition().x;
+	return displacement;
 }
 
 void Car::findPositon()
