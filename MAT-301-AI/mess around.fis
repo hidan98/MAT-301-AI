@@ -1,0 +1,49 @@
+[System]
+Name='mess around'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=9
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='Displacement'
+Range=[-800 800]
+NumMFs=3
+MF1='left':'gaussmf',[339.7 -800]
+MF2='center':'gaussmf',[339.7 -7.105e-15]
+MF3='right':'gaussmf',[339.7 800]
+
+[Input2]
+Name='velocity'
+Range=[-1 1]
+NumMFs=3
+MF1='left':'gaussmf',[0.4246 -1]
+MF2='straight':'gaussmf',[0.4246 0]
+MF3='right':'gaussmf',[0.4246 1]
+
+[Output1]
+Name='output1'
+Range=[-1 1]
+NumMFs=5
+MF1='hard_left':'trimf',[-1.5 -1 -0.5]
+MF2='left':'trimf',[-1 -0.5 0]
+MF3='no_change':'trimf',[-0.5 0 0.5]
+MF4='right':'trimf',[0 0.5 1]
+MF5='hard_right':'trimf',[0.500049583718779 1.00044958371878 1.50044958371878]
+
+[Rules]
+1 1, 5 (1) : 1
+1 2, 4 (1) : 1
+1 3, 3 (1) : 1
+2 1, 4 (1) : 1
+2 2, 3 (1) : 1
+2 3, 2 (1) : 1
+3 1, 3 (1) : 1
+3 2, 2 (1) : 1
+3 3, 1 (1) : 1

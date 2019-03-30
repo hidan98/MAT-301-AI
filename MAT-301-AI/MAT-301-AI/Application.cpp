@@ -42,8 +42,19 @@ Application::~Application()
 
 void Application::setUpFUIS()
 {
-	engine = new fl::Engine;
-	engine->setName("Fuzzy car engine");
+	engine = fl::FisImporter().fromFile("fuzzy.fis");
+
+	std::string status;
+	if (not engine->isReady(&status))
+		throw fl::Exception("[engine error] engine is not ready:\n" + status, FL_AT);
+
+	displacement = engine->getInputVariable("Displacement");
+	velocity = engine->getInputVariable("velocity");
+
+	output = engine->getOutputVariable("outputVel");
+
+	//output = engine->getOutputValue(0);
+	/*engine->setName("Fuzzy car engine");
 
 	displacement = new fl::InputVariable;
 	displacement->setName("displacement");
@@ -70,7 +81,7 @@ void Application::setUpFUIS()
 	output->setRange(-1, 1);
 	output->setLockValueInRange(true);
 	output->setAggregation(new fl::Maximum);
-	output->setDefuzzifier(new fl::Centroid(100));
+	output->setDefuzzifier(new fl::Centroid);
 	output->setDefaultValue(fl::nan);
 	output->setLockPreviousValue(false);
 	output->addTerm(new fl::Triangle("hardLeft", -1.5, -1, -0.5));
@@ -84,7 +95,7 @@ void Application::setUpFUIS()
 	rules = new fl::RuleBlock;
 	rules->setName("Rules");
 	rules->setEnabled(true);
-	rules->setConjunction(fl::null);
+	rules->setConjunction(new fl::Minimum);
 	rules->setDisjunction(fl::null);
 	rules->setImplication(new fl::AlgebraicProduct);
 	rules->setActivation(new fl::General);
@@ -108,7 +119,7 @@ void Application::setUpFUIS()
 		std::cout << status << std::endl;
 		throw fl::Exception("[engine error] engine is not ready:n" + status, FL_AT);
 	}
-		
+		*/
 }
 
 void Application::handleInput()
@@ -130,16 +141,17 @@ void Application::update(float dt)
 	/*std::string status;
 	if (not engine->isReady(&status))
 		throw fl::Exception("[engine error] engine is not ready:\n" + status, FL_AT);*/
-
-	displacement->setValue(car->getDisplacment().x);
-	float yikes = car->getVelocity().x;
-	velocity->setValue(car->getVelocity().x);
+	fl::scalar temp = car->getDisplacment().x;
+	displacement->setValue(temp);
+	fl::scalar temp1 = car->getVelocity().x;
+	//float yikes = car->getVelocity().x;
+	velocity->setValue(temp1);
 	engine->process();
-	float temp = output->getValue();
+	float temp3 = output->getValue();
 	car->setVelocity(sf::Vector2f(output->getValue(), car->getVelocity().y));
 	//std::cout << "displacement val: " << displacement->getValue() << "  velocity val: " << velocity->getValue() << "  out_vel: " << temp << std::endl;
 
-	car->move(temp , 0);
+	car->move(temp3 , 0);
 	ImGui::SFML::Update(*window, sf::seconds(dt));
 }
 
@@ -150,7 +162,7 @@ void Application::render()
 	window->draw(*car);
 
 	ImGui::Begin("dave");
-	ImGui::Text("%f", velocity->getValue());
+	ImGui::Text("%f", output->getValue());
 	ImGui::Text("Displacment %f", displacement->getValue());
 
 	ImGui::End();
