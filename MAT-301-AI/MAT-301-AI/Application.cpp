@@ -23,7 +23,8 @@ Application::Application(sf::RenderWindow* hwnd, Input* in, sf::Vector2i screen_
 	car->init(raceLine, screen);	
 
 	setUpFUIS();
-	
+	aiState = center;
+	changeAI = false;
 
 
 	for (int i = 0; i < 6; i++)
@@ -38,6 +39,15 @@ Application::Application(sf::RenderWindow* hwnd, Input* in, sf::Vector2i screen_
 
 Application::~Application()
 {
+	engine->~Engine();
+	delete engine;
+	engine = nullptr;
+
+	delete car;
+	car = nullptr;
+
+	delete raceLine;
+	raceLine = nullptr;
 }
 
 void Application::setUpFUIS()
@@ -138,20 +148,31 @@ void Application::handleInput()
 
 void Application::update(float dt)
 {
-	/*std::string status;
-	if (not engine->isReady(&status))
-		throw fl::Exception("[engine error] engine is not ready:\n" + status, FL_AT);*/
-	fl::scalar temp = car->getDisplacment().x;
-	displacement->setValue(temp);
-	fl::scalar temp1 = car->getVelocity().x;
-	//float yikes = car->getVelocity().x;
-	velocity->setValue(temp1);
-	engine->process();
-	float temp3 = output->getValue();
-	car->setVelocity(sf::Vector2f(output->getValue(), car->getVelocity().y));
-	//std::cout << "displacement val: " << displacement->getValue() << "  velocity val: " << velocity->getValue() << "  out_vel: " << temp << std::endl;
-
-	car->move(temp3 , 0);
+	if (raceLine->getPosition().x < 0)
+	{
+		raceLine->setPosition(0, raceLine->getPosition().y);
+	}
+	else if (raceLine->getPosition().x > screen.x)
+	{
+		raceLine->setPosition(screen.x, raceLine->getPosition().y -1);
+	}
+	//
+	if (changeAI)
+	{
+		stateMachine();
+	}
+	else
+	{
+		fl::scalar temp = car->getDisplacment().x;
+		displacement->setValue(temp);
+		fl::scalar temp1 = car->getVelocity().x;
+		velocity->setValue(temp1);
+		engine->process();
+		car->setVelocity(sf::Vector2f(output->getValue(), car->getVelocity().y));
+	}
+	
+	
+	car->update();
 	ImGui::SFML::Update(*window, sf::seconds(dt));
 }
 
@@ -163,7 +184,9 @@ void Application::render()
 
 	ImGui::Begin("dave");
 	ImGui::Text("%f", output->getValue());
-	ImGui::Text("Displacment %f", displacement->getValue());
+	ImGui::Text("Displacment %f", car->getDisplacment());
+	ImGui::Text("ai state %i", aiState);
+	ImGui::Checkbox("Change Ai", &changeAI);
 
 	ImGui::End();
 	ImGui::SFML::Render(*window);
@@ -179,4 +202,56 @@ void Application::beginRender()
 void Application::endRender()
 {
 	window->display();
+}
+
+void Application::checkState()
+{
+	if ((car->getDisplacment().x <1) && (car->getDisplacment().x > -1))
+	{
+		aiState = center;
+	}
+	else if (car->getDisplacment().x > 0.2f && car->getDisplacment().x < 400)
+	{
+		aiState = right;
+	}
+	else if ((car->getDisplacment().x > 400))
+	{
+		aiState = farRight;
+	}
+	else if (car->getDisplacment().x < -0.2f && car->getDisplacment().x > -400)
+	{
+		aiState = left;
+	}
+	else if (car->getDisplacment().x < -400)
+	{
+		aiState = farLeft;
+	}
+}
+void Application::stateMachine()
+{
+	checkState();
+
+	switch (aiState)
+	{
+	case farLeft:
+		car->setVelocity(sf::Vector2f(1.0f, car->getVelocity().y));
+		break;
+	case left:
+		car->setVelocity(sf::Vector2f(0.5f, car->getVelocity().y));
+		break;
+
+	case center:
+
+		break;
+	case right:
+		car->setVelocity(sf::Vector2f(-0.50f, car->getVelocity().y));
+		break;
+
+	case farRight:
+		car->setVelocity(sf::Vector2f(-1.0f, car->getVelocity().y));
+		break;
+
+	default:
+		break;
+	}
 }

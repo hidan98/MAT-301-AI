@@ -4,6 +4,15 @@
 #include "Car.h"
 #include "fl/Headers.h"
 
+enum state
+{
+	farLeft =0,
+	left =1,
+	center =2,
+	right = 3,
+	farRight = 4
+};
+
 class Application
 {
 public:
@@ -22,6 +31,9 @@ private:
 	void endRender();
 
 	void setUpFUIS();
+	void stateMachine();
+
+	void checkState();
 
 	Input* input;
 	sf::RenderWindow* window;
@@ -40,6 +52,10 @@ private:
 
 	fl::OutputVariable* output;
 
-	fl::RuleBlock* rules;
+	//fl::RuleBlock* rules;
+
+	bool changeAI;
+
+	state aiState;
 };
 
