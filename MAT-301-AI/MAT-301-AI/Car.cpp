@@ -39,7 +39,7 @@ void Car::cleanUp()
 void Car::update()
 {
 	displacement.x = getPosition().x - raceLine->getPosition().x;
-	move(velocity.x, 0);
+	move(velocity);
 	//std::cout << displacement.x << std::endl;
 
 	

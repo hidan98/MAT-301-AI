@@ -3,12 +3,13 @@
 #include "Input.h"
 #include "Car.h"
 #include "fl/Headers.h"
+#include <imgui.h>
 
 enum state
 {
 	farLeft =0,
 	left =1,
-	center =2,
+	centre =2,
 	right = 3,
 	farRight = 4
 };
@@ -32,7 +33,7 @@ private:
 
 	void setUpFUIS();
 	void stateMachine();
-
+	void lineCheck();
 	void checkState();
 
 	Input* input;
@@ -55,7 +56,12 @@ private:
 	//fl::RuleBlock* rules;
 
 	bool changeAI;
+	bool testMode;
+	float inputVelocity;
+	int inputDIsplacment;
 
 	state aiState;
+
+	ImGuiStyle style;
 };
 
