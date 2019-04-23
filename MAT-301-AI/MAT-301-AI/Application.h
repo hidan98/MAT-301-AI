@@ -35,6 +35,7 @@ private:
 	void stateMachine();
 	void lineCheck();
 	void checkState();
+	void renderImGui();
 
 	Input* input;
 	sf::RenderWindow* window;
@@ -44,8 +45,6 @@ private:
 	Car* car;
 
 	sf::Vector2i screen;
-
-	sf::RectangleShape arrayOfLines[6];
 
 	fl::Engine* engine;
 	fl::InputVariable* displacement;
@@ -61,7 +60,10 @@ private:
 	int inputDIsplacment;
 
 	state aiState;
+	std::string stateString;
 
 	ImGuiStyle style;
+
+	const char* charArray;
 };
 
