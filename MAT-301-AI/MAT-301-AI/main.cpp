@@ -7,19 +7,20 @@
 int main()
 {
 	sf::Vector2i screen(1600, 900);
-	
-
-	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "MAT 301");
+	//set upi sfml window
+	sf::RenderWindow window(sf::VideoMode(screen.x, screen.y), "MAT 301 AI");
 	ImGui::SFML::Init(window);
 	Input input;
+	//send pointers to app
 	Application app(&window, &input, screen);
-	sf::Sprite;
 	sf::Clock clock;
 	float deltaTime;
+
+	//main app loop
 	while (window.isOpen())
 	{
 		sf::Event event;
-
+		//process any events
 		while (window.pollEvent(event))
 		{
 			ImGui::SFML::ProcessEvent(event);
@@ -42,12 +43,12 @@ int main()
 			}
 		}
 		deltaTime = clock.restart().asSeconds();
+		//update "game based stuff"
 		app.handleInput();
 		app.update(deltaTime);
 		app.render();
-	
-
 	}
+
 	ImGui::SFML::Shutdown();
 	return 0;
 }

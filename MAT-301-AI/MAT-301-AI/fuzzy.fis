@@ -28,7 +28,7 @@ MF2='straight':'gbellmf',[0.5 3.278 0]
 MF3='right':'trimf',[-9.207e-05 1 2]
 
 [Output1]
-Name='output1'
+Name='outputVelocity'
 Range=[-1 1]
 NumMFs=5
 MF1='hard_left':'trimf',[-1.5 -1 -0.5]
